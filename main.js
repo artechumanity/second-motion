@@ -21,6 +21,11 @@ document.querySelectorAll('.heroArt video').forEach((v) => seen.observe(v));
 // Header border once the page scrolls.
 addEventListener('scroll', () => $('nav').classList.toggle('scrolled', scrollY > 8), { passive: true });
 
+// The nav stays off-screen until the big hero wordmark has scrolled out of view, so it gets to be the
+// first thing people see; then the nav slides down with its own, smaller wordmark.
+new IntersectionObserver(([e]) => $('nav').classList.toggle('visible', !e.isIntersecting))
+  .observe(document.querySelector('.hero .wordmark'));
+
 const hoverable = matchMedia('(hover: hover)').matches;
 function workCard(w, i) {
   const li = document.createElement('li');

@@ -20,12 +20,20 @@ p { margin: 0; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* Navigation */
-.nav { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 24px; padding: 14px var(--pad);
+/* Hidden above the viewport at first, so the big hero wordmark has the moment to itself; it slides down
+   once that wordmark has scrolled out of view (see the IntersectionObserver in main.js), showing the
+   smaller wordmark here instead. */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; align-items: center; gap: 24px; padding: 14px var(--pad);
   background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid transparent; transition: border-color .2s; }
+  border-bottom: 1px solid transparent; transform: translateY(-100%); transition: transform .35s ease, border-color .2s; }
+.nav.visible { transform: translateY(0); }
 .nav.scrolled { border-bottom-color: var(--line); }
 .brand { font: 800 20px/1 var(--display); text-decoration: none; letter-spacing: -.02em; white-space: nowrap; }
 .brand span { color: var(--accent); margin-left: .3em; }
+/* The "2" standing in for the "S" in "Second": sized up so it reads as an oversized numeral, not a
+   same-size letter swap. */
+.two { font-size: 2em; }
+.brand .two, .wordmark .two { color: inherit; margin-left: 0; }
 .nav nav { display: flex; gap: 22px; margin-left: auto; }
 .nav nav a { text-decoration: none; font-size: 15px; color: var(--soft); }
 .nav nav a:hover { color: var(--ink); }
@@ -43,7 +51,7 @@ p { margin: 0; }
 .hero { max-width: var(--max); margin: 0 auto; padding: clamp(40px, 7vw, 96px) var(--pad) clamp(32px, 5vw, 64px);
   display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
 .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
-.wordmark { font-size: clamp(48px, 6.3vw, 100px); line-height: .9; font-weight: 800; letter-spacing: -.035em; margin: 18px 0 26px; }
+.wordmark { font-size: clamp(40px, 5.2vw, 82px); line-height: .9; font-weight: 800; letter-spacing: -.035em; margin: 18px 0 26px; }
 .wordmark span { color: var(--accent); }
 .lede { font: 400 clamp(19px, 1.7vw, 23px)/1.5 var(--serif); color: var(--soft); max-width: 34em; }
 .heroActions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
@@ -57,7 +65,7 @@ p { margin: 0; }
 .t4 { width: 36%; aspect-ratio: 1; left: 12%; bottom: -2%; z-index: 1; transform: rotate(4deg); }
 @media (max-width: 860px) {
   .hero { grid-template-columns: 1fr; }
-  .wordmark { font-size: min(15vw, 118px); }
+  .wordmark { font-size: min(12.3vw, 97px); }
   .heroArt { max-width: 520px; width: 88%; margin: 0 auto; }
 }
 
